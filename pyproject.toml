@@ -19,3 +19,8 @@ pg-mcp-server = "pg_mcp_server.__main__:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pg_mcp_server"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

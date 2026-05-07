@@ -46,12 +46,22 @@ def create_server(cfg: Config) -> Server:
             ),
             Tool(
                 name="query",
-                description="Execute a SQL query on a PostgreSQL connection",
+                description=(
+                    "Execute a SQL query on a PostgreSQL connection. "
+                    "The query MUST start with a READ ONLY transaction: "
+                    "BEGIN READ ONLY; <sql>; ROLLBACK;"
+                ),
                 inputSchema={
                     "type": "object",
                     "properties": {
                         "connection": {"type": "string", "description": "Connection name, e.g. dev-metadata"},
-                        "sql": {"type": "string", "description": "SQL query to execute"},
+                        "sql": {
+                            "type": "string",
+                            "description": (
+                                "SQL query wrapped in a READ ONLY transaction. "
+                                "Example: BEGIN READ ONLY; SELECT * FROM users; ROLLBACK;"
+                            ),
+                        },
                     },
                     "required": ["connection", "sql"],
                 },
